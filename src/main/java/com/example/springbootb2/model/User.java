@@ -20,7 +20,7 @@ public class User {
     private Long id;
     @Column(length = 30, nullable = false)
     private String phone;
-    @Column(length = 30, nullable = false)
+    @Column(length = 512, nullable = false)
     private String password;
     @Column(length = 30, nullable = false)
     private String firstname;
@@ -31,4 +31,6 @@ public class User {
     @OneToMany(mappedBy = "user")
     @Fetch(FetchMode.SUBSELECT)
     private List<Order> orders;
+    private String role;
+    private boolean isActive;
 }

@@ -21,4 +21,6 @@ public class UserDto {
     private String lastname;
     private String address;
     private List<OrderDto> orders;
+    private String role;
+    private boolean isActive;
 }
