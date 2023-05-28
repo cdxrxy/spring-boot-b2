@@ -1,6 +1,7 @@
 package com.example.springbootb2.controller;
 
 import com.example.springbootb2.dto.ErrorDto;
+import com.example.springbootb2.exception.ItemNotExistsException;
 import com.example.springbootb2.exception.UserAlreadyExistsException;
 import com.example.springbootb2.exception.UserNotExistsException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -15,7 +16,7 @@ import static org.springframework.http.HttpStatus.NOT_FOUND;
 
 @RestControllerAdvice
 public class ExceptionController {
-    @ExceptionHandler(UserNotExistsException.class)
+    @ExceptionHandler({UserNotExistsException.class, ItemNotExistsException.class})
     public ResponseEntity<?> handleNotFound(HttpServletRequest request, RuntimeException e) {
         return ResponseEntity.status(NOT_FOUND).body(
                 ErrorDto.builder()

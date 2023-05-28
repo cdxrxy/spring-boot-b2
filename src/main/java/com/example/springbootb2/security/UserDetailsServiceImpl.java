@@ -1,9 +1,8 @@
 package com.example.springbootb2.security;
 
-import com.example.springbootb2.exception.UserNotExistsException;
+import com.example.springbootb2.model.User;
 import com.example.springbootb2.repository.UserRepo;
 import lombok.RequiredArgsConstructor;
-import com.example.springbootb2.model.User;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

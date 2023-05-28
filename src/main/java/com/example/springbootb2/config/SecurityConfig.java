@@ -6,10 +6,8 @@ import com.example.springbootb2.security.UserDetailsServiceImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -45,7 +43,7 @@ public class SecurityConfig {
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
                 .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers(POST, "/users/**").hasRole("ADMIN")
-                        .requestMatchers(GET, "/users/**").hasRole("USER")
+                        .requestMatchers(GET, "/users/**").hasAnyRole("ADMIN", "USER")
                         .requestMatchers("/login/**").permitAll()
                         .requestMatchers("/logout/**").permitAll()
                         .requestMatchers("/error/**").permitAll()
