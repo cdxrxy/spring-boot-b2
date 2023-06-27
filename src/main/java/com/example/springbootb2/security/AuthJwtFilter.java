@@ -1,5 +1,7 @@
 package com.example.springbootb2.security;
 
+import com.example.springbootb2.exception.ItemNotExistsException;
+import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -28,31 +30,28 @@ public class AuthJwtFilter extends OncePerRequestFilter {
     protected void doFilterInternal(@NonNull HttpServletRequest request,
                                     @NonNull HttpServletResponse response,
                                     @NonNull FilterChain filterChain) throws ServletException, IOException {
-        try {
-            String authHeader = request.getHeader(AUTHORIZATION);
-            if (authHeader == null || !authHeader.startsWith("Bearer ")) {
-                filterChain.doFilter(request, response);
-                return;
-            }
-
-            String jwt = authHeader.substring(7);
-            jwtService.validateJwt(jwt);
-
-            Authentication authentication = new UsernamePasswordAuthenticationToken(
-                    jwtService.getUsernameFromJwt(jwt),
-                    null,
-                    List.of(new SimpleGrantedAuthority(
-                                    jwtService.getRoleFromJwt(jwt)
-                            )
-                    )
-            );
-
-            SecurityContext context = SecurityContextHolder.createEmptyContext();
-            context.setAuthentication(authentication);
-            SecurityContextHolder.setContext(context);
-
+        String authHeader = request.getHeader(AUTHORIZATION);
+        String jwt;
+        if (authHeader == null ||
+                !authHeader.startsWith("Bearer ") ||
+                !jwtService.validateJwt((jwt = authHeader.substring(7)))) {
             filterChain.doFilter(request, response);
-        } catch (Exception ignore) {
+            return;
         }
+
+        Authentication authentication = new UsernamePasswordAuthenticationToken(
+                jwtService.getUsernameFromJwt(jwt),
+                null,
+                List.of(new SimpleGrantedAuthority(
+                                jwtService.getRoleFromJwt(jwt)
+                        )
+                )
+        );
+
+        SecurityContext context = SecurityContextHolder.createEmptyContext();
+        context.setAuthentication(authentication);
+        SecurityContextHolder.setContext(context);
+
+        filterChain.doFilter(request, response);
     }
 }

@@ -26,9 +26,16 @@ public class JwtService {
                 .compact();
     }
 
-    public void validateJwt(String jwt) {
-        Jwts.parserBuilder().setSigningKey(Keys.hmacShaKeyFor(jwtSecret.getBytes(UTF_8)))
-                .build().parseClaimsJws(jwt);
+    public boolean validateJwt(String jwt) {
+        try {
+            Jwts.parserBuilder().setSigningKey(Keys.hmacShaKeyFor(jwtSecret.getBytes(UTF_8)))
+                    .build().parseClaimsJws(jwt);
+
+            return true;
+        }
+        catch (Exception e) {
+            return false;
+        }
     }
 
     public String getUsernameFromJwt(String jwt) {
