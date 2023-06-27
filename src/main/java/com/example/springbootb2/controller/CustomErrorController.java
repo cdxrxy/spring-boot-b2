@@ -13,7 +13,7 @@ import java.util.Date;
 @RestController
 public class CustomErrorController implements ErrorController {
     @RequestMapping("/error")
-    public ResponseEntity handleError(HttpServletRequest request) {
+    public ResponseEntity<?> handleError(HttpServletRequest request) {
         int statusCode = Integer.parseInt(request.getAttribute(RequestDispatcher.ERROR_STATUS_CODE).toString());
 
         return ResponseEntity.status(statusCode).body(ErrorDto.builder()
