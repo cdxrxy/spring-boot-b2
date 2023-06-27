@@ -30,7 +30,8 @@ public class AuthJwtFilter extends OncePerRequestFilter {
                                     @NonNull FilterChain filterChain) throws ServletException, IOException {
         try {
             String authHeader = request.getHeader(AUTHORIZATION);
-            if (!authHeader.startsWith("Bearer ")) {
+            if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+                filterChain.doFilter(request, response);
                 return;
             }
 
@@ -50,8 +51,6 @@ public class AuthJwtFilter extends OncePerRequestFilter {
             context.setAuthentication(authentication);
             SecurityContextHolder.setContext(context);
         } catch (Exception ignore) {
-        } finally {
-            filterChain.doFilter(request, response);
         }
     }
 }
