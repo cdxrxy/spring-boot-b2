@@ -1,7 +1,5 @@
 package com.example.springbootb2.security;
 
-import com.example.springbootb2.exception.ItemNotExistsException;
-import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -34,7 +32,7 @@ public class AuthJwtFilter extends OncePerRequestFilter {
         String jwt;
         if (authHeader == null ||
                 !authHeader.startsWith("Bearer ") ||
-                !jwtService.validateJwt((jwt = authHeader.substring(7)))) {
+                !jwtService.validateJwt(jwt = authHeader.substring(7))) {
             filterChain.doFilter(request, response);
             return;
         }
