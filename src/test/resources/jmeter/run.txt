@@ -1,0 +1,1 @@
+"C:\Program Files\JMeter\apache-jmeter-5.6.2\bin\jmeter" -n -t C:\Users\jem\IdeaProjects\spring-boot-b2\src\test\resources\jmeter\ItemsApiTest.jmx -l C:\Users\jem\IdeaProjects\spring-boot-b2\src\test\resources\jmeter\ItemsApiTestLog.jtl -e -o C:\Users\jem\IdeaProjects\spring-boot-b2\src\test\resources\jmeter\web

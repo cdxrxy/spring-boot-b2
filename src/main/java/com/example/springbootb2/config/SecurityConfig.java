@@ -42,6 +42,7 @@ public class SecurityConfig {
                 .exceptionHandling(exception -> exception.authenticationEntryPoint(entryPoint))
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
                 .authorizeHttpRequests(authorize -> authorize
+                        .requestMatchers(GET, "/items/**").permitAll()
                         .requestMatchers(POST, "/items/**").hasRole("ADMIN")
                         .requestMatchers(POST, "/users/**").hasRole("ADMIN")
                         .requestMatchers(GET, "/users/**").hasAnyRole("ADMIN", "USER")
