@@ -28,23 +28,6 @@ public class AuthEntryPoint implements AuthenticationEntryPoint {
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
         response.setContentType("application/json");
-
-        try {
-            requestMappingHandlerMapping.getHandler(request).getHandler();
-        } catch (Exception e) {
-            response.setStatus(SC_NOT_FOUND);
-            response.getWriter().write(
-                    objectMapper.writeValueAsString(ErrorDto.builder()
-                            .timestamp(new Date())
-                            .status(SC_NOT_FOUND)
-                            .error(NOT_FOUND.getReasonPhrase())
-                            .path(request.getServletPath())
-                            .message("There is no such resource")
-                            .build())
-            );
-            return;
-        }
-
         response.setStatus(SC_UNAUTHORIZED);
         response.getWriter().write(
                 objectMapper.writeValueAsString(ErrorDto.builder()
