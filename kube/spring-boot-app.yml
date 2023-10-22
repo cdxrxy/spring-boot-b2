@@ -21,6 +21,11 @@ spec:
             - name: DB_URL
               value: jdbc:postgresql://postgres:5432/b2
           imagePullPolicy: Always
+          resources:
+            limits:
+              cpu: 500m
+            requests:
+              cpu: 300m
 ---
 apiVersion: v1
 kind: Service
