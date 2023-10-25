@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: app
-          image: cdxray/spring-boot-app:1.0.1
+          image: cdxray/spring-boot-app
           ports:
             - containerPort: 8081
           env:
