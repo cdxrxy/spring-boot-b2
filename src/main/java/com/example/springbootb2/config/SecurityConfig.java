@@ -51,6 +51,7 @@ public class SecurityConfig {
                         .requestMatchers("/error/**").permitAll()
                         .requestMatchers("/favicon.ico").permitAll()
                         .requestMatchers("/es/**").permitAll()
+                        .requestMatchers("/actuator/**").permitAll()
                         .anyRequest().authenticated())
                 .logout(logout -> logout
                         .logoutSuccessHandler(new HttpStatusReturningLogoutSuccessHandler(NO_CONTENT))
